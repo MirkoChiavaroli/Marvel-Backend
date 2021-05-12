@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const cors = require("cors");
+router.use(cors());
 
 router.get("/comics", async (req, res) => {
   try {
+    const { title, limit, skip } = req.query;
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API}&title=${title}&limit=${limit}&skip=${skip}`
     );
     res.status(200).json(response.data);
   } catch (error) {
