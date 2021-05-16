@@ -6,9 +6,11 @@ router.use(cors());
 
 router.get("/comics", async (req, res) => {
   try {
-    const { title, limit, skip } = req.query;
+    const limit = req.query.limit || 100;
+    const skip = req.query.skyp || 0;
+
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API}&title=${title}&limit=${limit}&skip=${skip}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API}&limit=${limit}&skip=${skip}`
     );
     res.status(200).json(response.data);
   } catch (error) {
